@@ -1,0 +1,2 @@
+8e347b5c-1cfd-4722-85ec-7d24323417e3
+const CONNECTION: &'static str = "wss://botrisbattle.com/ws?token={8e347b5c-1cfd-4722-85ec-7d24323417e3}&roomKey={vndn5ta5e7kdddnxlkzsploe}";
