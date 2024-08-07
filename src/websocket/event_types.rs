@@ -1,4 +1,4 @@
-use super::super::types::types::*;
+use super::super::types::{types::*, game_event::*};
 use serde::{Deserialize, Serialize};
 use serde_json::Number;
 
@@ -69,7 +69,7 @@ pub struct RequestMoveType {
 #[derive(Debug, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ActionType {
-    commands: Vec<Command>
+    pub commands: Vec<Command>
 }
 
 

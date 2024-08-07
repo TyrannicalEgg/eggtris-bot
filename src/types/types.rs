@@ -43,16 +43,17 @@ pub struct PlayerInfo {
 }
 
 #[derive(Debug, Deserialize, Serialize)]
-#[serde(rename_all = "camelCase")]
 pub enum Piece {
     I, O, J, L, S, Z, T
 }
 
-#[derive(Debug, Deserialize, Serialize)]
-#[serde(rename_all = "camelCase")]
-pub enum Block {
-    Piece, G, Null
-}
+// #[derive(Debug, Deserialize, Serialize)]
+// #[serde(rename_all = "camelCase")]
+
+type Block = Option<Piece>;
+// pub enum Block {
+//     Piece, G, Null
+// }
 
 #[derive(Debug, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
@@ -79,7 +80,7 @@ pub struct GameState {
     current: PieceData,
     can_hold: bool,
     combo: Number,
-    b2b: Number,
+    b2b: bool,
     score: Number,
     pieces_placed: Number,
     dead: bool,
@@ -97,39 +98,68 @@ pub enum Command {
     RotateCcw,
     Drop,
     SonicDrop,
+    HardDrop,
 }
 
-
+#[derive(Debug, Deserialize, Serialize)]
 pub enum ClearName {
+    #[serde(rename = "Single")]
     Single,
+    #[serde(rename = "Double")]
     Double,
+    #[serde(rename = "Triple")]
     Triple,
+    #[serde(rename = "Quad")]
     Quad,
+    #[serde(rename = "All-Spin Single")]
     ASS,
+    #[serde(rename = "All-Spin Double")]
     ASD,
+    #[serde(rename = "All-Spin Triple")]
     AST,
+    #[serde(rename = "Perfect Clear")]
     PC,
 }
 
-impl std::fmt::Display for ClearName {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match self {
-            Self::Single => write!(f, "Single"),
-            Self::Double => write!(f, "Double"),
-            Self::Triple => write!(f, "Triple"),
-            Self::Quad => write!(f, "Quad"),
-            Self::ASS => write!(f, "All-Spin Single"),
-            Self::ASD => write!(f, "All-Spin Double"),
-            Self::AST => write!(f, "All-Spin Triple"),
-            Self::PC => write!(f, "Perfect Clear"),
-        }
-    }
+#[derive(Debug, Deserialize, Serialize)]
+#[serde(tag = "type", rename_all = "snake_case")]
+pub enum GameEvent {
+    PiecePlaced {payload: PiecePlacedType},
+    DamageTanked {payload: DamageTankedType},
+    Clear,
+    GameOver,
 }
-
-
 
 #[derive(Debug, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
-pub struct GameEvent {
+pub struct PiecePlacedType {
+    initial: PieceData,
+    r#final: PieceData,
+}
 
+#[derive(Debug, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct DamageTankedType {
+    hole_indices: Vec<Number>,
+}
+
+#[derive(Debug, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ClearType {
+    clear_name: ClearName,
+    all_spin: bool,
+    b2b: bool,
+    combo: Number,
+    pc: bool,
+    attack: Number,
+    cancelled: Number,
+    piece: PieceData,
+    cleared_lines: Vec<ClearedLines>
+}
+
+#[derive(Debug, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ClearedLines {
+    height: Number,
+    blocks: Vec<Block>
 }
