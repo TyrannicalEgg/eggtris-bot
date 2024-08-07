@@ -1,4 +1,4 @@
-use super::super::types::{types::*, game_event::*};
+use super::super::types::types::*;
 use serde::{Deserialize, Serialize};
 use serde_json::Number;
 
