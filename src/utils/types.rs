@@ -47,21 +47,18 @@ pub enum Piece {
     I, O, J, L, S, Z, T
 }
 
-// #[derive(Debug, Deserialize, Serialize)]
-// #[serde(rename_all = "camelCase")]
-
-type Block = Option<Piece>;
-// pub enum Block {
-//     Piece, G, Null
-// }
+#[derive(Debug, Deserialize, Serialize)]
+pub enum Block {
+    I, O, J, L, S, Z, T, G
+}
 
 #[derive(Debug, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct PieceData {
-    piece: Piece,
-    x: Number,
-    y: Number,
-    rotation: i8
+    pub piece: Piece,
+    pub x: Number,
+    pub y: Number,
+    pub rotation: i8
 }
 
 #[derive(Debug, Deserialize, Serialize)]
@@ -73,17 +70,17 @@ pub struct GarbageLine {
 #[derive(Debug, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct GameState {
-    board: Vec<Vec<Block>>,
-    queue: Vec<Piece>,
-    garbage_queued: Vec<GarbageLine>,
-    held: Option<Piece>,
-    current: PieceData,
-    can_hold: bool,
-    combo: Number,
-    b2b: bool,
-    score: Number,
-    pieces_placed: Number,
-    dead: bool,
+    pub board: Vec<[Option<Block>; 10]>,
+    pub queue: Vec<Piece>,
+    pub garbage_queued: Vec<GarbageLine>,
+    pub held: Option<Piece>,
+    pub current: PieceData,
+    pub can_hold: bool,
+    pub combo: Number,
+    pub b2b: bool,
+    pub score: Number,
+    pub pieces_placed: Number,
+    pub dead: bool,
 }
 
 #[derive(Debug, Deserialize, Serialize)]

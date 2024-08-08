@@ -1,4 +1,4 @@
-use super::super::types::types::*;
+use super::types::*;
 use serde::{Deserialize, Serialize};
 use serde_json::Number;
 
@@ -62,14 +62,30 @@ pub struct RoundStartType {
 #[derive(Debug, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct RequestMoveType {
-    game_state: GameState,
-    players: Vec<PlayerData>
+    pub game_state: GameState,
+    pub players: Vec<PlayerData>
 }
 
 #[derive(Debug, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ActionType {
     pub commands: Vec<Command>
+}
+
+impl ActionType {
+    pub fn new() -> ActionType {
+        ActionType { commands: Vec::new() }
+    }
+
+    pub fn append(&mut self, command: Command) -> &mut Self {
+        self.commands.push(command);
+        self
+    }
+
+    pub fn append_all(&mut self, commands: &mut Vec<Command>) -> &mut Self {
+        self.commands.append(commands);
+        self
+    }
 }
 
 
