@@ -66,6 +66,8 @@ pub struct RequestMoveType {
     pub players: Vec<PlayerData>
 }
 
+/// Represents a collection of moves to be sent to the server for the
+/// current piece
 #[derive(Debug, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ActionType {
@@ -77,12 +79,16 @@ impl ActionType {
         ActionType { commands: Vec::new() }
     }
 
-    pub fn append(&mut self, command: Command) -> &mut Self {
+    /// Adds a new command to the end of the vector
+    /// containing the requested Commands
+    pub fn push(&mut self, command: Command) -> &mut Self {
         self.commands.push(command);
         self
     }
 
-    pub fn append_all(&mut self, commands: &mut Vec<Command>) -> &mut Self {
+    /// Appends all of the Commands in commands to the 
+    /// end of the vector containing the requested Commands
+    pub fn append(&mut self, commands: &mut Vec<Command>) -> &mut Self {
         self.commands.append(commands);
         self
     }

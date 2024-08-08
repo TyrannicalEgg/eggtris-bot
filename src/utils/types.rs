@@ -83,6 +83,8 @@ pub struct GameState {
     pub dead: bool,
 }
 
+/// Represents the type of command to be sent to the 
+/// server and what move you want the piece to make
 #[derive(Debug, Deserialize, Serialize)]
 #[serde(rename_all = "snake_case")]
 pub enum Command {

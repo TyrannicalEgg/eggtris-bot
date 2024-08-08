@@ -1,1 +1,1 @@
-pub mod bot;
+pub mod slow_bot;
