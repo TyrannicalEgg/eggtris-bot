@@ -29,7 +29,7 @@ pub enum ServerEvent {
 #[derive(Debug, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct RoomDataType {
-    room_data: RoomData,
+    pub room_data: RoomData,
 }
 
 pub type ErrorType = String;
@@ -37,26 +37,26 @@ pub type ErrorType = String;
 #[derive(Debug, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct PlayerDataType {
-    player_data: PlayerData,
+    pub player_data: PlayerData,
 }
 
 #[derive(Debug, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SessionIdType {
-    session_id: SessionId,
+    pub session_id: SessionId,
 }
 
 #[derive(Debug, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct PlayerInfoType {
-    player_info: PlayerInfo,
+    pub player_info: PlayerInfo,
 }
 
 #[derive(Debug, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct RoundStartType {
-    starts_at: Number,
-    room_data: RoomData,
+    pub starts_at: Number,
+    pub room_data: RoomData,
 }
 
 #[derive(Debug, Deserialize, Serialize)]
@@ -98,24 +98,24 @@ impl ActionType {
 #[derive(Debug, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct PlayerActionType {
-    session_id: SessionId,
-    commands: Vec<Command>,
-    game_state: GameState,
-    events: Vec<GameEvent>,
+    pub session_id: SessionId,
+    pub commands: Vec<Command>,
+    pub game_state: GameState,
+    pub events: Vec<GameEvent>,
 }
 
 #[derive(Debug, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct PlayerDamageReceivedType {
-    session_id: SessionId,
-    damage: Number,
-    game_state: GameState,
+    pub session_id: SessionId,
+    pub damage: Number,
+    pub game_state: GameState,
 }
 
 #[derive(Debug, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct EndType {
-    winner_id: SessionId,
-    winner_info: PlayerInfo,
-    room_data: RoomData,
+    pub winner_id: SessionId,
+    pub winner_info: PlayerInfo,
+    pub room_data: RoomData,
 }

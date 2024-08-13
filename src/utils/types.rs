@@ -6,41 +6,41 @@ pub type SessionId = String;
 #[derive(Debug, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct RoomData {
-    id: String,
-    host: PlayerInfo,
-    private: bool,
-    ft: Number,
-    pps: Number,
-    initial_multiplier: Number,
-    final_multiplier: Number,
-    start_margin: Number,
-    end_margin: Number,
-    max_players: Number,
-    game_ongoing: bool,
-    round_ongoing: bool,
-    started_at: Option<Number>,
-    ended_at: Option<Number>,
-    last_winner: Option<SessionId>,
-    players: Vec<PlayerData>,
-    banned: Vec<PlayerInfo>,
+    pub id: String,
+    pub host: PlayerInfo,
+    pub private: bool,
+    pub ft: Number,
+    pub pps: Number,
+    pub initial_multiplier: Number,
+    pub final_multiplier: Number,
+    pub start_margin: Number,
+    pub end_margin: Number,
+    pub max_players: Number,
+    pub game_ongoing: bool,
+    pub round_ongoing: bool,
+    pub started_at: Option<Number>,
+    pub ended_at: Option<Number>,
+    pub last_winner: Option<SessionId>,
+    pub players: Vec<PlayerData>,
+    pub banned: Vec<PlayerInfo>,
 }
 
 #[derive(Debug, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct PlayerData {
-    session_id: SessionId,
-    playing: bool,
-    info: PlayerInfo,
-    wins: Number,
-    game_state: Option<GameState>,
+    pub session_id: SessionId,
+    pub playing: bool,
+    pub info: PlayerInfo,
+    pub wins: Number,
+    pub game_state: Option<GameState>,
 }
 
 #[derive(Debug, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct PlayerInfo {
-    user_id: String,
-    creator: String,
-    bot: String,
+    pub user_id: String,
+    pub creator: String,
+    pub bot: String,
 }
 
 #[derive(Debug, Deserialize, Serialize)]
@@ -65,7 +65,7 @@ pub struct PieceData {
 #[derive(Debug, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct GarbageLine {
-    delay: Number
+    pub delay: Number
 }
 
 #[derive(Debug, Deserialize, Serialize)]
@@ -146,20 +146,20 @@ pub struct DamageTankedType {
 #[derive(Debug, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ClearType {
-    clear_name: ClearName,
-    all_spin: bool,
-    b2b: bool,
-    combo: Number,
-    pc: bool,
-    attack: Number,
-    cancelled: Number,
-    piece: PieceData,
-    cleared_lines: Vec<ClearedLines>
+    pub clear_name: ClearName,
+    pub all_spin: bool,
+    pub b2b: bool,
+    pub combo: Number,
+    pub pc: bool,
+    pub attack: Number,
+    pub cancelled: Number,
+    pub piece: PieceData,
+    pub cleared_lines: Vec<ClearedLines>
 }
 
 #[derive(Debug, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ClearedLines {
-    height: Number,
-    blocks: Vec<Block>
+    pub height: Number,
+    pub blocks: Vec<Block>
 }
