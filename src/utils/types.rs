@@ -1,6 +1,8 @@
 use serde::{Deserialize, Serialize};
 use serde_json::Number;
 
+use super::piece::*;
+
 pub type SessionId = String;
 
 #[derive(Debug, Deserialize, Serialize)]
@@ -44,22 +46,12 @@ pub struct PlayerInfo {
 }
 
 #[derive(Debug, Deserialize, Serialize)]
-pub enum Piece {
-    I, O, J, L, S, Z, T
-}
-
-#[derive(Debug, Deserialize, Serialize)]
-pub enum Block {
-    I, O, J, L, S, Z, T, G
-}
-
-#[derive(Debug, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct PieceData {
     pub piece: Piece,
-    pub x: Number,
-    pub y: Number,
-    pub rotation: i8
+    pub x: u16,
+    pub y: u16,
+    pub rotation: u8
 }
 
 #[derive(Debug, Deserialize, Serialize)]
@@ -68,10 +60,12 @@ pub struct GarbageLine {
     pub delay: Number
 }
 
+pub type Board = Vec<[Option<Block>; 10]>;
+
 #[derive(Debug, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct GameState {
-    pub board: Vec<[Option<Block>; 10]>,
+    pub board: Board,
     pub queue: Vec<Piece>,
     pub garbage_queued: Vec<GarbageLine>,
     pub held: Option<Piece>,

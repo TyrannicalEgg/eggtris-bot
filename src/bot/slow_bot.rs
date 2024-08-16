@@ -1,15 +1,21 @@
-use crate::utils::event_types::{ActionType, RequestMoveType};
-use crate::utils::types::Command;
-use std::thread::sleep;
-use std::time::Duration;
+use crate::utils::{
+        board::BoardSimple,
+        event_types::{ActionType, RequestMoveType},
+};
 
-pub fn request_moves(_event: &RequestMoveType) -> ActionType {
-    let mut actions = ActionType::new();
-    actions.push(Command::MoveLeft);
-    actions.push(Command::MoveRight);
+use tokio::time::{Duration, sleep};
 
-    let time = Duration::new(3, 500000000);
-    sleep(time);
+pub async fn request_moves(event: &RequestMoveType) -> ActionType {
+    let game_state = &event.game_state;
+
+    let mut board = BoardSimple::new(&game_state.board);
+    board.add_piece(&game_state.current);
+    board.display(&mut std::io::stdout()).unwrap_or(());
+
+    let actions = ActionType::new();
+
+    sleep(Duration::from_millis(3500)).await;
 
     actions
 }
+

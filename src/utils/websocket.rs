@@ -4,7 +4,7 @@ use tokio::net::TcpStream;
 use tokio_tungstenite::{connect_async, MaybeTlsStream, WebSocketStream, tungstenite::Message};
 use futures_util::{stream::{SplitSink, SplitStream}, SinkExt, StreamExt};
 use serde_json::{from_str, json};
-use colored::Colorize;
+use crossterm::style::Stylize;
 
 use crate::utils::event_types::{ServerEvent, RequestMoveType, ActionType};
 
