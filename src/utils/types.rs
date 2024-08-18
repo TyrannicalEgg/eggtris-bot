@@ -49,9 +49,9 @@ pub struct PlayerInfo {
 #[serde(rename_all = "camelCase")]
 pub struct PieceData {
     pub piece: Piece,
-    pub x: u16,
-    pub y: u16,
-    pub rotation: u8
+    pub x: i16,
+    pub y: i16,
+    pub rotation: u16
 }
 
 #[derive(Debug, Deserialize, Serialize)]

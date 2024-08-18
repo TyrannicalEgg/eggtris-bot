@@ -32,21 +32,21 @@ impl BoardSimple {
         }
     }
 
-    pub fn add_piece(&mut self, piece_data: &PieceData) {
-        let piece = &piece_data.piece;
-        let x:usize = piece_data.x.into();
-        let y:usize = piece_data.y.into();
-        let mut piece_matrix = piece.get_matrix();
-        let piece_size = piece_matrix.len();
+    // pub fn add_piece(&mut self, piece_data: &PieceData) {
+        // let piece = &piece_data.piece;
+        // let x = piece_data.x;
+        // let y = piece_data.y;
+        // let mut piece_matrix = piece.get_matrix();
+        // let piece_size = piece_matrix.len().into();
 
-        for line in &mut piece_matrix {
-            *line <<= 13 - piece_size - x;
-        }
+        // for line in &mut piece_matrix {
+        //     *line <<= 13 - piece_size - x;
+        // }
 
-        for i in 0..piece_matrix.len() {
-            self.board[y-i] = piece_matrix[i];
-        }
-    }
+        // for i in 0..piece_matrix.len() {
+        //     *self.board.index_mut(y-i) = piece_matrix[i];
+        // }
+    // }
 }
 
 const LEFT_WALL: u16 = 0;

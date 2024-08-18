@@ -130,7 +130,7 @@ impl BotrisWebSocket {
     /// Reads a message from the botrisbattle server and returns 
     /// a parsed struct ServerEvent representing its contents.
     /// It will return None on an error.
-    async fn read (&mut self) -> Option<ServerEvent> {
+    pub async fn read (&mut self) -> Option<ServerEvent> {
         let message = self.read.next().await?;
         let message = match message {
             Ok(msg) => msg.to_string(),
