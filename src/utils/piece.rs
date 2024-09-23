@@ -5,6 +5,11 @@ pub enum Piece {
     I, O, J, L, S, Z, T
 }
 
+#[derive(Debug, Deserialize, Serialize)]
+pub enum Block {
+    I, O, J, L, S, Z, T, G
+}
+
 impl Piece {
     pub fn get_matrix(&self) -> Vec<u16> {
         match self {
@@ -61,7 +66,3 @@ impl Piece {
     }
 }
 
-#[derive(Debug, Deserialize, Serialize)]
-pub enum Block {
-    I, O, J, L, S, Z, T, G
-}

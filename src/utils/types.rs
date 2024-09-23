@@ -7,9 +7,14 @@ pub type SessionId = String;
 
 #[derive(Debug, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
-pub struct RoomData {
-    pub id: String,
-    pub host: PlayerInfo,
+pub struct HostInfo {
+    id: String,
+    display_name: String,
+}
+
+#[derive(Debug, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct RoomSettings {
     pub private: bool,
     pub ft: Number,
     pub pps: Number,
@@ -17,14 +22,21 @@ pub struct RoomData {
     pub final_multiplier: Number,
     pub start_margin: Number,
     pub end_margin: Number,
-    pub max_players: Number,
+}
+
+#[derive(Debug, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct RoomData {
+    pub id: String,
+    pub host: HostInfo,
+    pub settings: RoomSettings,
     pub game_ongoing: bool,
     pub round_ongoing: bool,
     pub started_at: Option<Number>,
     pub ended_at: Option<Number>,
     pub last_winner: Option<SessionId>,
     pub players: Vec<PlayerData>,
-    pub banned: Vec<PlayerInfo>,
+    pub banned: Vec<BotInfo>,
 }
 
 #[derive(Debug, Deserialize, Serialize)]
@@ -32,18 +44,37 @@ pub struct RoomData {
 pub struct PlayerData {
     pub session_id: SessionId,
     pub playing: bool,
-    pub info: PlayerInfo,
+    pub info: BotInfo,
     pub wins: Number,
     pub game_state: Option<GameState>,
 }
 
 #[derive(Debug, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
-pub struct PlayerInfo {
-    pub user_id: String,
-    pub creator: String,
-    pub bot: String,
+pub struct BotInfo {
+    pub id: String,
+    pub name: String,
+    pub avatar: Vec<Vec<Option<Piece>>>,
+    pub team: Option<String>,
+    pub language: Option<String>,
+    pub eval: Option<String>,
+    pub movegen: Option<String>,
+    pub search: Option<String>,
+    pub developers: Vec<DeveloperInfo>,
 }
+
+#[derive(Debug, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct DeveloperInfo {
+    pub id: String,
+    pub display_name: String,
+}
+
+// #[derive(Debug, Deserialize, Serialize)]
+// #[serde(rename_all = "camelCase")]
+// pub enum Piece {
+//     I, O, J, L, S, Z, T,
+// }
 
 #[derive(Debug, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
@@ -119,8 +150,9 @@ pub enum ClearName {
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum GameEvent {
     PiecePlaced {payload: PiecePlacedType},
+    QueueAdded {payload: QueueAddedType},
     DamageTanked {payload: DamageTankedType},
-    Clear,
+    Clear {payload: ClearType},
     GameOver,
 }
 
@@ -129,6 +161,12 @@ pub enum GameEvent {
 pub struct PiecePlacedType {
     initial: PieceData,
     r#final: PieceData,
+}
+
+#[derive(Debug, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct QueueAddedType {
+    piece: Piece
 }
 
 #[derive(Debug, Deserialize, Serialize)]
@@ -148,12 +186,12 @@ pub struct ClearType {
     pub attack: Number,
     pub cancelled: Number,
     pub piece: PieceData,
-    pub cleared_lines: Vec<ClearedLines>
+    pub cleared_lines: Vec<ClearedLines>,
 }
 
 #[derive(Debug, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ClearedLines {
     pub height: Number,
-    pub blocks: Vec<Block>
+    pub blocks: Vec<Option<Block>>,
 }

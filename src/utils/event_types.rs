@@ -11,10 +11,9 @@ pub enum ServerEvent {
     Error {payload: ErrorType},
     PlayerJoined {payload: PlayerDataType},
     PlayerLeft {payload: SessionIdType},
-    PlayerBanned {payload: PlayerInfoType},
-    PlayerUnbanned {payload: PlayerInfoType},
+    PlayerBanned {payload: BotInfoType},
+    PlayerUnbanned {payload: BotInfoType},
     SettingsChanged {payload: RoomDataType},
-    HostChanged {payload: PlayerInfoType},
     GameStarted {},
     RoundStarted {payload: RoundStartType},
     RequestMove {payload: RequestMoveType},
@@ -48,8 +47,8 @@ pub struct SessionIdType {
 
 #[derive(Debug, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
-pub struct PlayerInfoType {
-    pub player_info: PlayerInfo,
+pub struct BotInfoType {
+    pub bot_info: BotInfo,
 }
 
 #[derive(Debug, Deserialize, Serialize)]
@@ -116,6 +115,6 @@ pub struct PlayerDamageReceivedType {
 #[serde(rename_all = "camelCase")]
 pub struct EndType {
     pub winner_id: SessionId,
-    pub winner_info: PlayerInfo,
+    pub winner_info: BotInfo,
     pub room_data: RoomData,
 }
