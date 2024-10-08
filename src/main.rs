@@ -4,8 +4,8 @@ pub mod bot;
 use std::io::Write;
 
 use crossterm::{
-    cursor, queue, style::{Stylize, PrintStyledContent},
-    terminal::{self, ClearType::*}, ExecutableCommand,
+    cursor::{self, Hide, Show, MoveTo}, queue, style::{Stylize, PrintStyledContent},
+    terminal::{EnterAlternateScreen, LeaveAlternateScreen},
 };
 
 use utils::websocket::BotrisWebSocket;
@@ -16,18 +16,25 @@ use bot::nakamuraas_voracity_bot::Bot;
 async fn main() {
     tokio::spawn(async move {
         tokio::signal::ctrl_c().await.unwrap();
-        std::io::stdout().execute(cursor::Show).unwrap();
+        queue!(
+            std::io::stdout(),
+            Show,
+            LeaveAlternateScreen,
+        ).unwrap();
+        std::io::stdout().flush().unwrap();
         std::process::exit(0);
     });
 
     let mut stdout = std::io::stdout();
 
-    queue!(stdout,
-        terminal::Clear(All),
-        cursor::MoveTo(0,0),
-        cursor::Hide,
+    queue!(
+        stdout,
+        EnterAlternateScreen,
+        Hide,
+        MoveTo(0,0),
         PrintStyledContent("Running Eggtris Bot\n\n".dark_red().bold()),
     ).unwrap();
+
     stdout.flush().unwrap();
     
     let mut ws = BotrisWebSocket::new().await;
